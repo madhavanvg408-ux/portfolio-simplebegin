@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <style>
+    .entire {
+      padding: 60px;
+    }
+
+    table {
+      margin: 0 auto;
+    }
+
+    td {
+      padding: 8px;
+    }
+
+    .error {
+      font-size: 0.85em;
+      display: none;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .entire h2{
+        text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+    <div class="entire">
+      <h2>REGISTRATION FORM</h2><br>
+      <table>
+        <tr>
+          <td><label for="idname">Name:</label></td>
+          <td>
+            <input type="text" placeholder="Enter your Name" id="idname"><br>
+            <div id="errorName" class="error">Name cannot be empty</div>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="idemail">Email ID:</label></td>
+          <td>
+            <input type="email" placeholder="Enter your Email ID" id="idemail"><br>
+            <div id="errorEmail" class="error">Please enter a valid email</div>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="idpass">Password:</label></td>
+          <td>
+            <input type="password" placeholder="Enter your Password" id="idpass"><br>
+            <div id="errorPass" class="error">Password must be at least 6 characters</div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button id="btn" disabled>SUBMIT</button></td>
+        </tr>
+      </table>
+    </div>
+ 
+
+  <script>
+    const nameInput = document.getElementById('idname');
+    const emailInput = document.getElementById('idemail');
+    const passInput = document.getElementById('idpass');
+    const btn = document.getElementById('btn');
+
+    const errorName = document.getElementById('errorName');
+    const errorEmail = document.getElementById('errorEmail');
+    const errorPass = document.getElementById('errorPass');
+
+    function isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    }
+
+    function validateAll() {
+      let valid = true;
+
+      if (nameInput.value.trim() === "") {
+        errorName.style.display = "block";
+        valid = false;
+      } else {
+        errorName.style.display = "none";
+      }
+
+      if (emailInput.value.trim() === "" || !isValidEmail(emailInput.value.trim())) {
+        errorEmail.style.display = "block";
+        valid = false;
+      } else {
+        errorEmail.style.display = "none";
+      }
+
+      if (passInput.value.length < 6) {
+        errorPass.style.display = "block";
+        valid = false;
+      } else {
+        errorPass.style.display = "none";
+      }
+
+      btn.disabled = !valid;
+    }
+
+    nameInput.addEventListener('input', validateAll);
+    emailInput.addEventListener('input', validateAll);
+    passInput.addEventListener('input', validateAll);
+
+    btn.addEventListener('click', function(event) {
+      event.preventDefault();
+
+      validateAll();
+      if (!btn.disabled) {
+       
+        alert("Form is valid! Submitting...");
+      }
+    });
+
+    validateAll();
+  </script>
+</body>
+</html>
